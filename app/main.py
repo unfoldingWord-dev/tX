@@ -1,13 +1,17 @@
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
+from services import Services
 
 app = FlaskAPI(__name__)
+api = Services(app)
 
 notes = {
     0: 'do the shopping',
     1: 'build the codez',
     2: 'paint the door',
 }
+
+routes = []
 
 def note_repr(key):
     return {
@@ -16,7 +20,14 @@ def note_repr(key):
     }
 
 
-@app.route("/", methods=['GET', 'POST'])
+@api.route('/')
+def index():
+    """
+    Displays a list of registered services
+    """
+    return api.formatted_routes(request.host_url)
+
+@api.route("/list", methods=['GET', 'POST'])
 def notes_list():
     """
     List or create notes.
@@ -31,7 +42,7 @@ def notes_list():
     return [note_repr(idx) for idx in sorted(notes.keys())]
 
 
-@app.route("/<int:key>/", methods=['GET', 'PUT', 'DELETE'])
+@api.route("/<int:key>/", methods=['GET', 'PUT', 'DELETE'])
 def notes_detail(key):
     """
     Retrieve, update or delete note instances.
