@@ -1,9 +1,10 @@
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
-from services import Services
+from service_manager import ServiceManager
+from services.sample import sample_service
 
 app = FlaskAPI(__name__)
-api = Services(app)
+api = ServiceManager(app)
 
 notes = {
     0: 'do the shopping',
@@ -27,7 +28,11 @@ def index():
     """
     return api.formatted_routes(request.host_url)
 
+@api.register_route(sample_service, '/sample')
+@api.register_route(sample_service, '/sample/<string:name>')
+
 @api.route("/list", methods=['GET', 'POST'])
+
 def notes_list():
     """
     List or create notes.

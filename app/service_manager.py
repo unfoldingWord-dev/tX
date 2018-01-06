@@ -1,6 +1,6 @@
 from flask_api import FlaskAPI
 
-class Services():
+class ServiceManager():
 
     def __init__(self, app):
         """
@@ -10,7 +10,7 @@ class Services():
         self.__routes = {}
         self.__app = app
 
-    def route(self, rule, **options):
+    def register_route(self, func, rule, **options):
         """Like :meth:`Flask.route` but with additional steps.
         The route is stored in a list so we can keep track of all the exposed API end points.
         :param self:
@@ -20,14 +20,28 @@ class Services():
                          endpoint
         :param options: the options to be forwarded to the underlying rule.
         """
+        doc = ""
+        if func.__doc__:
+            doc = func.__doc__.strip()
+        self.__routes[func.__name__] = {
+            'rule': rule,
+            'doc': doc
+        }
+        endpoint = options.pop('endpoint', None)
+        self.__app.add_url_rule(rule, endpoint, func, **options)
+        return func
+
+    def route(self, rule, **options):
+        """A decorator version of :meth:`Flask.route`
+        :param self:
+        :param rule: the URL rule as string
+        :param endpoint: the endpoint for the registered URL rule. Flask
+                         itself assumes the name of the view function as
+                         endpoint
+        :param options: the options to be forwarded to the underlying rule.
+        """
         def decorator(f):
-            self.__routes[f.__name__] = {
-                'rule': rule,
-                'doc': f.__doc__.strip()
-            }
-            endpoint = options.pop('endpoint', None)
-            self.__app.add_url_rule(rule, endpoint, f, **options)
-            return f
+            return self.register_route(f, rule, **options)
 
         return decorator
 
