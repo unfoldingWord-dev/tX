@@ -1,6 +1,10 @@
+"""A test
+.. module:: service_manager
+-- moduleauthor:: Joel Lonbeck <joel@neutrinographics.com>
+"""
+
 import re
 from flask_api import FlaskAPI
-
 
 class ServiceManager():
 
