@@ -1,9 +1,9 @@
-start:
-	python ./src/main.py
-
 doc:
 	cd docs && sphinx-apidoc --force -o source/ ../src/
 	cd docs && make html
+
+run:
+	python ./src/main.py
 
 test:
 	python ./src/main.py

@@ -1,3 +1,7 @@
+"""The Translation Converter Service (tx) provides various RESTfull commands for manipulating content from the Door43 Content Services.
+
+"""
+
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from service_manager import ServiceManager
@@ -26,6 +30,7 @@ def note_repr(key):
 def index():
     """
     Displays a list of registered services
+
     """
     return api.formatted_routes(request.host_url)
 

@@ -47,9 +47,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'tx'
-copyright = u'2018, Joel Lonbeck <joel@neutrinographics.com>'
-author = u'Joel Lonbeck <joel@neutrinographics.com>'
+project = u'Translation Converter (tx)'
+copyright = u'2018, Door43'
+author = u'Door43'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -84,7 +84,9 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+import sphinx_rtd_theme
+html_theme = "sphinx_rtd_theme"
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -102,12 +104,12 @@ html_static_path = ['_static']
 #
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-    ]
-}
+# html_sidebars = {
+#     '**': [
+#         'relations.html',  # needs 'show_related': True theme option to display
+#         'searchbox.html',
+#     ]
+# }
 
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -140,8 +142,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'tx.tex', u'tx Documentation',
-     u'Joel Lonbeck \\textless{}joel@neutrinographics.com\\textgreater{}', 'manual'),
+    (master_doc, 'tx.tex', u'Translation Converter (tx) Documentation',
+     u'Door43', 'manual'),
 ]
 
 
@@ -150,7 +152,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tx', u'tx Documentation',
+    (master_doc, 'tx', u'Translation Converter (tx) Documentation',
      [author], 1)
 ]
 
@@ -161,8 +163,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'tx', u'tx Documentation',
-     author, 'tx', 'One line description of project.',
+    (master_doc, 'tx', u'Translation Converter (tx) Documentation',
+     author, 'Door43', 'A tool for manipulating translation from the Door43 Content Service.',
      'Miscellaneous'),
 ]
 
