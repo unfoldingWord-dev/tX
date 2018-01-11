@@ -1,4 +1,6 @@
+import re
 from flask_api import FlaskAPI
+
 
 class ServiceManager():
 
@@ -22,7 +24,7 @@ class ServiceManager():
         """
         doc = ""
         if func.__doc__:
-            doc = func.__doc__.strip()
+            doc = re.sub(r'\s+', ' ', func.__doc__.strip())
         self.__routes[func.__name__] = {
             'rule': rule,
             'doc': doc

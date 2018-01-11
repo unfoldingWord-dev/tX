@@ -4,6 +4,7 @@ from service_manager import ServiceManager
 from services.sample import sample_service
 
 app = FlaskAPI(__name__)
+# use api to add routes so we can automate some things
 api = ServiceManager(app)
 
 notes = {
@@ -72,4 +73,4 @@ def page_not_found(e):
     return e
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
