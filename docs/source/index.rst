@@ -1,5 +1,5 @@
 .. tx documentation master file, created by
-   sphinx-quickstart on Thu Jan 11 12:55:04 2018.
+   sphinx-quickstart on Thu Jan 11 13:09:48 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -7,12 +7,9 @@ Welcome to tx's documentation!
 ==============================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :caption: Contents:
 
-   main
-   service_manager
-   services
 
 
 Indices and tables
