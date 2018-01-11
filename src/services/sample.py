@@ -1,9 +1,11 @@
 def sample_service(name=None):
     """
-    This is the friendly service. Give it your name
+    This is a sample service. Give it your name
     and prepare to be greeted!
-    :param name: your name
-    :return: a greeting or an error
+
+    :param name: Your name
+    :type name: basestring
+    :return: A greeting or an error
     """
     if name:
         return { 'hello': name}

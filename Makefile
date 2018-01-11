@@ -6,7 +6,7 @@ run:
 	python ./src/main.py
 
 test:
-	python ./src/main.py
+	python -m unittest discover
 
 dependencies:
 	pip install -r requirements.txt

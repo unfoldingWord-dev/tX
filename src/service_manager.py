@@ -1,30 +1,34 @@
-"""A test
-.. module:: service_manager
--- moduleauthor:: Joel Lonbeck <joel@neutrinographics.com>
-"""
-
 import re
 from flask_api import FlaskAPI
 
 class ServiceManager():
+    """
+    The ServiceManager is a light wrapper around FlaskAPI
+    that allows us to perform additional processing when routes are registered.
+    """
 
     def __init__(self, app):
         """
-        :param app:
+        :param app: The global FlaskAPI instance
         :type app: FlaskAPI
         """
         self.__routes = {}
         self.__app = app
 
     def register_route(self, func, rule, **options):
-        """Like :meth:`Flask.route` but with additional steps.
-        The route is stored in a list so we can keep track of all the exposed API end points.
-        :param self:
-        :param rule: the URL rule as string
-        :param endpoint: the endpoint for the registered URL rule. Flask
+        """Like :meth:`Flask.route` but with additional processing.
+        The route is stored in a list so we can keep track of all the exposed API endpoints.
+
+        :param func: The function that will be executed for the URL rule.
+        :type func: basestring
+        :param rule: The URL rule to match in order to execute the endpoint.
+        :type rule: basestring
+        :param endpoint: The name of the exposed endpoint. Flask
                          itself assumes the name of the view function as
-                         endpoint
-        :param options: the options to be forwarded to the underlying rule.
+                         the endpoint.
+        :type endpoint: basestring
+
+        :return: The registered function.
         """
         doc = ""
         if func.__doc__:
@@ -38,27 +42,43 @@ class ServiceManager():
         return func
 
     def route(self, rule, **options):
-        """A decorator version of :meth:`Flask.route`
-        :param self:
-        :param rule: the URL rule as string
-        :param endpoint: the endpoint for the registered URL rule. Flask
+        """A decorator version of :meth:`register_route`.
+        This allows you to use the decorator syntax like:
+
+        >>> @api.route('/')
+        >>> def index():
+
+        :param rule: The URL rule to match in order to execute the endpoint.
+        :type rule: basestring
+        :param endpoint: The name of the exposed endpoint. Flask
                          itself assumes the name of the view function as
-                         endpoint
-        :param options: the options to be forwarded to the underlying rule.
+                         the endpoint.
+        :type endpoint: basestring
         """
         def decorator(f):
             return self.register_route(f, rule, **options)
 
         return decorator
 
-    def routes(self):
-        """
-        Returns a list of routes that have been registered
-        :return:
-        """
-        return self.__routes
-
     def formatted_routes(self, host_url):
+        """
+        Returns a dictionary of endpoints that have been registered with the api.
+        This is useful for displaying a summary of available endpoints.
+
+        :param host_url: The host address e.g. https://example.com
+        :type host_url: basestring
+
+        :return:
+            A dict mapping endpoints to their corresponding route and summary.
+            For example:
+
+            >>> {
+            >>>     'my_service': {
+            >>>         'route': 'https://example.com/myservice/<string:some_arg>',
+            >>>         'doc': 'This is my function. It takes one argument.'
+            >>>     }
+            >>> }
+        """
         routes = {}
         for key, value in self.__routes.iteritems():
             url = host_url.rstrip('/') +  value['rule']

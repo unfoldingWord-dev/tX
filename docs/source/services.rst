@@ -4,6 +4,14 @@ services package
 Submodules
 ----------
 
+services\.notes module
+----------------------
+
+.. automodule:: services.notes
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 services\.sample module
 -----------------------
 

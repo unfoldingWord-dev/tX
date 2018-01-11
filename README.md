@@ -12,6 +12,14 @@ All of the development commands have been place in a make file for easy use.
 * `make test` run the tests.
 * `make run` starts the development server.
 
+## Contributing
+
+When contributing please follow these practices:
+
+* place new services within a new file under `./src/services/`.
+* register your services in `./src/main.py` within the `register_services` function.
+* add tests for your services in `./tests`.
+
 # Documentation
 
 All methods and modules **must** be documented with reStructured text.
