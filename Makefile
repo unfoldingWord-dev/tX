@@ -1,8 +1,8 @@
 start:
 	python ./src/main.py
 
-docs: clean
-	sphinx-apidoc --force --full -H "tx" -v "1.0" -a -o ./docs ./src
+doc:
+	cd docs && sphinx-apidoc --force -o source/ ../src/
 	cd docs && make html
 
 test:
@@ -10,6 +10,3 @@ test:
 
 dependencies:
 	pip install -r requirements.txt
-
-clean:
-	rm -rf docs
