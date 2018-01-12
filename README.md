@@ -5,18 +5,18 @@ processing and publishing translations on the [Door43 Content Service](https://g
 
 # Development
 
-All of the development commands have been place in a make file for easy use.
+All of the development commands have been place in a makefile for easy use.
 
-* `make` or `make doc` generate the documentation.
+* `make` or `make doc` generates the documentation.
 * `make dependencies` install the dependencies.
-* `make test` run the tests.
+* `make test` runs the tests.
 * `make run` starts the development server.
 
 ## Contributing
 
 When contributing please follow these practices:
 
-* place new services within a new file under `./src/services/`.
+* place new services under `./src/services/`.
 * register your services in `./src/main.py` within the `register_services` function.
 * add tests for your services in `./tests`.
 
