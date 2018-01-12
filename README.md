@@ -25,6 +25,9 @@ When contributing please follow these practices:
 All methods and modules **must** be documented with reStructured text.
 These doc strings will be used to generate the documentation files.
 
+Everything under `./doc` has been configured for you or is managed by the makefile.
+**Stay out of there!**
+
 ## Subpackages
 
 If your service is prepared as a subpackage (directory) as apposed to a submodule (single file)
