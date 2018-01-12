@@ -10,10 +10,17 @@ This site is the official documentation for Translation Converter (tx) tool.
 This tool provides a number of RESTful services for processing and publishing translations on the `Door43 Content Service <https://git.door43.org/>`_.
 
 .. toctree::
-   :maxdepth: 6
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: Services:
 
-   modules
+   src.services
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Engine:
+
+   src.main
+   src.service_manager
 
 Indices and tables
 ==================

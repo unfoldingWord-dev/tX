@@ -19,5 +19,4 @@ Submodules
 .. toctree::
 
    src.services.sample
-   src.services.test
 
