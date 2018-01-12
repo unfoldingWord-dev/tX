@@ -35,6 +35,9 @@ def register_services(api):
     Registers the available services with the
     Service Manager.
     New services should be registered inside this function.
+
+    :param api: An instance of the Service Manager
+    :type api: ServiceManager
     """
     api.register_route(sample_service, '/sample')
     api.register_route(sample_service, '/sample/<string:name>')

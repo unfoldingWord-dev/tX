@@ -20,7 +20,7 @@ class ServiceManager():
         The route is stored in a list so we can keep track of all the exposed API endpoints.
 
         :param func: The function that will be executed for the URL rule.
-        :type func: basestring
+        :type func: callable
         :param rule: The URL rule to match in order to execute the endpoint.
         :type rule: basestring
         :param endpoint: The name of the exposed endpoint. Flask
