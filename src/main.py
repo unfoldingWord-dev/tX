@@ -6,7 +6,7 @@ from flask import request
 from flask_api import FlaskAPI
 from service_manager import ServiceManager
 from services.sample import sample_service
-from services.notes import notes_list, notes_detail
+from src.services.notes.notes import notes_list, notes_detail
 
 app = FlaskAPI(__name__)
 api = ServiceManager(app)

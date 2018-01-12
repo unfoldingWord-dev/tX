@@ -24,3 +24,9 @@ When contributing please follow these practices:
 
 All methods and modules **must** be documented with reStructured text.
 These doc strings will be used to generate the documentation files.
+
+## Subpackages
+
+If your service is prepared as a subpackage (directory) as apposed to a submodule (single file)
+you must add a doc string to the subpackage's `__init__.py` file otherwise it will not
+be added to the table of contents.

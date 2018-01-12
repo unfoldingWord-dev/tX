@@ -4,16 +4,16 @@
    contain the root `toctree` directive.
 
 Translation Converter Documentation
-==============================
+===================================
 
 This site is the official documentation for Translation Converter (tx) tool.
 This tool provides a number of RESTful services for processing and publishing translations on the `Door43 Content Service <https://git.door43.org/>`_.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 6
    :caption: Contents:
 
-
+   modules
 
 Indices and tables
 ==================
