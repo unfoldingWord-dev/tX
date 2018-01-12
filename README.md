@@ -1,4 +1,4 @@
-# Translation Converter (tx)
+# translationConverter (tx)
 
 This tool provides a number of RESTful services for
 processing and publishing translations on the [Door43 Content Service](https://git.door43.org).
@@ -30,6 +30,6 @@ Everything under `./doc` has been configured for you or is managed by the makefi
 
 ## Subpackages
 
-If your service is prepared as a subpackage (directory) as apposed to a submodule (single file)
+If your service is prepared as a subpackage (directory) as opposed to a submodule (single file)
 you must add a doc string to the subpackage's `__init__.py` file otherwise it will not
 be added to the table of contents.
