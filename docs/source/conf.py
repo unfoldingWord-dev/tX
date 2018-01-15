@@ -49,7 +49,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Translation Converter (tx)'
+project = u'translationConverter (tx)'
 copyright = u'2018, Door43'
 author = u'Door43'
 
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'tx.tex', u'Translation Converter (tx) Documentation',
+    (master_doc, 'tx.tex', u'translationConverter (tx) Documentation',
      u'Door43', 'manual'),
 ]
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tx', u'Translation Converter (tx) Documentation',
+    (master_doc, 'tx', u'translationConverter (tx) Documentation',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'tx', u'Translation Converter (tx) Documentation',
-     author, 'Door43', 'A tool for manipulating translation from the Door43 Content Service.',
+    (master_doc, 'tx', u'translationConverter (tx) Documentation',
+     author, 'Door43', 'A tool for manipulating translations on the Door43 Content Service.',
      'Miscellaneous'),
 ]
 

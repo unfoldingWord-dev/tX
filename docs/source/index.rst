@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Translation Converter Documentation
-===================================
+translationConverter Documentation
+==================================
 
-This site is the official documentation for Translation Converter (tx) tool.
+This site is the official documentation for translationConverter (tx) tool.
 This tool provides a number of RESTful services for processing and publishing translations on the `Door43 Content Service <https://git.door43.org/>`_.
 
 .. toctree::
