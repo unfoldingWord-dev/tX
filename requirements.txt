@@ -2,3 +2,21 @@ Flask-API==1.0
 Flask==0.12.2
 Markdown==2.6.11
 Sphinx==1.6.6
+
+# Copied from tx-manager
+requests==2.13.0
+responses==0.5.1
+boto3==1.4.4
+bs4==0.0.1
+gogs_client==1.0.3
+coveralls==1.1
+python-json-logger==0.1.5
+markdown2==2.3.4
+future==0.16.0
+pyparsing==2.1.10
+usfm-tools==0.0.22
+#mock==2.0.0
+#moto==1.0.1
+pyyaml==3.12
+pymysql==0.7.11
+sqlalchemy==1.2.0b2

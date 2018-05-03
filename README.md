@@ -3,6 +3,30 @@
 This tool provides a number of RESTful services for
 processing and publishing translations on the [Door43 Content Service](https://git.door43.org).
 
+# Setup
+
+Satisfy basic depedencies:
+
+.. code-block:: bash
+
+    git clone git@github.com:unfoldingWord-dev/tx.git
+    sudo apt-get install python-pip
+    pip install virtualenv
+
+We recommend you create a Python virtual environment to help manage Python package dependencies:
+
+.. code-block:: bash
+
+    cd tx-manager
+    virtualenv venv
+
+Now load that virtual environment and install dependencies:
+
+.. code-block:: bash
+
+    source venv/bin/activate
+    pip install -r requirements.txt
+
 # Development
 
 All of the development commands have been place in a makefile for easy use.
