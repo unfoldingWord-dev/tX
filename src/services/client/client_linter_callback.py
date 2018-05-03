@@ -3,10 +3,10 @@ import os
 import tempfile
 import time
 from datetime import datetime
-from src.app.app import App
-from src.general_tools import file_utils
-from src.general_tools.file_utils import unzip, write_file, remove_tree, remove
-from src.models.job import TxJob
+from app.app import App
+from general_tools import file_utils
+from general_tools.file_utils import unzip, write_file, remove_tree, remove
+from models.job import TxJob
 
 
 class ClientLinterCallback(object):

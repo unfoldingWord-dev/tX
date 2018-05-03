@@ -7,7 +7,7 @@ import sys
 import shutil
 import yaml
 from mimetypes import MimeTypes
-from src.general_tools.data_utils import json_serial
+from general_tools.data_utils import json_serial
 
 # we need this to check for string versus object
 PY3 = sys.version_info[0] == 3

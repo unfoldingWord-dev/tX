@@ -3,11 +3,11 @@ import os
 import codecs
 from glob import glob
 from bs4 import BeautifulSoup
-from src.general_tools import file_utils
-from src.general_tools.file_utils import write_file
-from src.resource_container.ResourceContainer import RC
-from src.general_tools.file_utils import load_yaml_object
-from src.app.app import App
+from general_tools import file_utils
+from general_tools.file_utils import write_file
+from resource_container.ResourceContainer import RC
+from general_tools.file_utils import load_yaml_object
+from app.app import App
 
 
 def do_template(resource_type, source_dir, output_dir, template_file):

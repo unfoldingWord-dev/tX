@@ -5,9 +5,9 @@ from decimal import Decimal
 from datetime import datetime
 from operator import itemgetter
 from boto3.dynamodb.conditions import Key
-from src.models.language_stats import LanguageStats
-from src.models.manifest import TxManifest
-from src.app.app import App
+from models.language_stats import LanguageStats
+from models.manifest import TxManifest
+from app.app import App
 
 
 class PageMetrics(object):

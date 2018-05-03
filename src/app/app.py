@@ -2,10 +2,10 @@ from __future__ import unicode_literals, print_function
 import sys
 import logging
 import re
-from src.aws_tools.s3_handler import S3Handler
-from src.aws_tools.dynamodb_handler import DynamoDBHandler
-from src.aws_tools.lambda_handler import LambdaHandler
-from src.gogs_tools.gogs_handler import GogsHandler
+from aws_tools.s3_handler import S3Handler
+from aws_tools.dynamodb_handler import DynamoDBHandler
+from aws_tools.lambda_handler import LambdaHandler
+from gogs_tools.gogs_handler import GogsHandler
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -87,7 +87,7 @@ class App(object):
                        'linter_messaging_name', 'db_name', 'db_user']
 
     # DB related
-    Base = declarative_base()  # To be used in all src/model classes as the parent class: App.ModelBase
+    Base = declarative_base()  # To be used in all model classes as the parent class: App.ModelBase
     auto_setup_db = True
     manifest_table_name = 'manifests'
     job_table_name = 'jobs'
@@ -231,11 +231,11 @@ class App(object):
         """
         if not cls._db_session:
             cls._db_session = sessionmaker(bind=cls.db_engine(echo), expire_on_commit=False)()
-            from src.models.manifest import TxManifest
+            from models.manifest import TxManifest
             TxManifest.__table__.name = cls.manifest_table_name
-            from src.models.job import TxJob
+            from models.job import TxJob
             TxJob.__table__.name = cls.job_table_name
-            from src.models.module import TxModule
+            from models.module import TxModule
             TxModule.__table__.name = cls.module_table_name
             cls.db_create_tables([TxManifest.__table__, TxJob.__table__, TxModule.__table__])
         return cls._db_session

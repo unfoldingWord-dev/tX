@@ -5,8 +5,8 @@ import tempfile
 import codecs
 from bs4 import BeautifulSoup
 from shutil import copyfile
-from src.app.app import App
-from src.general_tools.file_utils import write_file, remove_tree, get_files
+from app.app import App
+from general_tools.file_utils import write_file, remove_tree, get_files
 from converter import Converter
 from usfm_tools.transform import UsfmTransform
 

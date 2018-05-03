@@ -3,10 +3,10 @@ import os
 import re
 from glob import glob
 from shutil import copy
-from src.app.app import App
-from src.door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
-from src.general_tools.file_utils import write_file, read_file
-from src.resource_container.ResourceContainer import RC
+from app.app import App
+from door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
+from general_tools.file_utils import write_file, read_file
+from resource_container.ResourceContainer import RC
 
 
 def do_preprocess(rc, repo_dir, output_dir):

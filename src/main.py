@@ -6,7 +6,7 @@ from flask import request
 from flask_api import FlaskAPI
 from service_manager import ServiceManager
 from services.sample import sample_service
-#from src.services.notes.notes import notes_list, notes_detail
+from services.converters.md2html_converter import Md2HtmlConverter
 
 app = FlaskAPI(__name__)
 api = ServiceManager(app)
@@ -41,8 +41,8 @@ def register_services(api):
     """
     api.register_route(sample_service, '/sample')
     api.register_route(sample_service, '/sample/<string:name>')
-    #api.register_route(notes_list, '/list', methods=['GET', 'POST'])
-    #api.register_route(notes_detail, '/<int:key>/', methods=['GET', 'PUT', 'DELETE'])
+    api.register_route(Md2HtmlConverter, '/converter/md2html')
+    api.register_route(Md2HtmlConverter, '/converter/md2html', methods=['POST'])
 
 if __name__ == "__main__":
     register_services(api)

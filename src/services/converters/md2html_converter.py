@@ -6,11 +6,21 @@ import markdown2
 import codecs
 from shutil import copyfile
 from bs4 import BeautifulSoup
-from src.general_tools.file_utils import write_file, get_files
+from general_tools.file_utils import write_file, get_files
 from converter import Converter
 
 
 class Md2HtmlConverter(Converter):
+    """
+    This converts Markdown to HTML.
+
+    :param string source:
+    :param string resource:
+    :param string cdn_file:
+    :param dict options:
+    :param string convert_callback:
+    :param string identifier:
+    """
 
     def convert(self):
         if self.resource == "obs":

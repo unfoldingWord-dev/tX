@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 import os
 import re
-from src.door43_tools.td_language import TdLanguage
-from src.door43_tools.bible_books import BOOK_NAMES
-from src.general_tools.file_utils import load_json_object, load_yaml_object, read_file
+from door43_tools.td_language import TdLanguage
+from door43_tools.bible_books import BOOK_NAMES
+from general_tools.file_utils import load_json_object, load_yaml_object, read_file
 from datetime import datetime
 from glob import glob
 
