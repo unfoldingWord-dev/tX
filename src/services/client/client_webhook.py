@@ -8,11 +8,55 @@ from datetime import datetime, timedelta
 from general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
 from general_tools.url_utils import download_file
 from resource_container.ResourceContainer import RC
-from client.preprocessors import do_preprocess
+from services.client.preprocessors import do_preprocess
 from models.manifest import TxManifest
 from models.module import TxModule
 from app.app import App
 from models.job import TxJob
+
+from flask import request, url_for
+from flask_api import status
+
+
+def ClientWebhookHandler():
+    """
+    Accepts webhook notification from DCS.
+
+    :param dict commit_data:
+    """
+    # Bail if this is not a POST with a payload
+    if not request.data:
+        return {'error': 'No payload found. You must submit a POST request via a DCS webhook notification'}
+    # Bail if this is not from DCS
+    if 'X-Gogs-Event' not in request.headers:
+        return {'error': 'This does not appear to be from DCS.'}
+    # Bail if this is not a push event
+    if not request.headers['X-Gogs-Event'] == 'push':
+        return {'error': 'This does not appear to be a push.'}
+
+    # Bail if the URL to the repo is invalid
+    if not request.data['repository']['html_url'].startswith(App.gogs_url):
+        return {'error': 'The repo does not belong to {0}.'.format(App.gogs_url)}
+
+    # Bail if the commit branch is not the default branch
+    try:
+        commit_branch = request.data['ref'].split('/')[2]
+    except IndexError:
+        return {'error': 'Could not determine commit branch, exiting.'}
+    except KeyError:
+        return {'error': 'This does not appear to be a push, exiting.'}
+    if commit_branch != request.data['repository']['default_branch']:
+        return {'error': 'Commit branch: {0} is not the default branch.'.format(commit_branch)}
+
+    # Check that the user token is valid
+    #if not App.gogs_user_token:
+        #raise Exception('DCS user token not given in Payload.')
+    #user = App.gogs_handler().get_user(App.gogs_user_token)
+    #if not user:
+        #raise Exception('Invalid DCS user token given in Payload')
+
+    webhook = ClientWebhook(request.data)
+    webhook.process_webhook()
 
 
 class ClientWebhook(object):
@@ -37,31 +81,6 @@ class ClientWebhook(object):
         self.linter_callback = '{0}/client/callback/linter'.format(App.api_url)
 
     def process_webhook(self):
-        # Check that we got commit data
-        if not self.commit_data:
-            raise Exception('No commit data from DCS was found in the Payload')
-
-        # Check that the user token is valid
-        if not App.gogs_user_token:
-            raise Exception('DCS user token not given in Payload.')
-        user = App.gogs_handler().get_user(App.gogs_user_token)
-        if not user:
-            raise Exception('Invalid DCS user token given in Payload')
-
-        # Check that the URL to the DCS repo is valid
-        if not self.commit_data['repository']['html_url'].startswith(App.gogs_url):
-            raise Exception('Repos can only belong to {0} to use this webhook client.'.format(App.gogs_url))
-
-        # Check that commit is on repo's default branch, else quit
-        try:
-            commit_branch = self.commit_data['ref'].split('/')[2]
-        except IndexError:
-            raise Exception('Could not determine commit branch, exiting.')
-        except KeyError:
-            Exception('This does not appear to be a push, exiting.')
-        if commit_branch != self.commit_data['repository']['default_branch']:
-            raise Exception('Commit branch: {0} is not the default branch, exiting.'.format(commit_branch))
-
         # Get the commit_id, commit_url
         commit_id = self.commit_data['after']
         commit = None
