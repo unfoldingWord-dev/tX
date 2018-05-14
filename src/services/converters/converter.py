@@ -5,6 +5,10 @@ import tempfile
 import traceback
 import urlparse
 import requests
+
+from sys import path as sysPath
+sysPath.append('src/') # So unit tests can find imports
+
 from general_tools.url_utils import download_file
 from general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
 from app.app import App
@@ -60,7 +64,7 @@ class Converter(object):
     def convert(self):
         """
         Dummy function for converters.
-        
+
         Returns true if the resource could be converted
         :return bool:
         """
