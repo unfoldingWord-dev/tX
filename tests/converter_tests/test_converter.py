@@ -7,7 +7,7 @@ from contextlib import closing
 from mock import mock
 from requests import Response
 from src.services.converters.converter import Converter
-from src.services.converters.usfm2html import Usfm2HtmlConverter
+from src.services.converters.usfm2html_converter import Usfm2HtmlConverter
 from src.general_tools.file_utils import remove_tree
 
 
