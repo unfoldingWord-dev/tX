@@ -9,10 +9,10 @@ clean_doc:
 	cd docs && rm -f source/src.*.rst
 
 run:
-	python ./src/main.py
+	python2 src/main.py
 
 test:
-	python -m unittest discover
+	python2 -m unittest discover
 
 dependencies:
 	pip install -r requirements.txt
