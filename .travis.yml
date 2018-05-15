@@ -10,7 +10,7 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 
-script: coverage run make test
+script: coverage run python2 -m unittest discover -s tests/
 
 after_success:
   - coveralls
