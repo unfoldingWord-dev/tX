@@ -5,12 +5,13 @@ import unittest
 import codecs
 import shutil
 from contextlib import closing
+from bs4 import BeautifulSoup
+
 from src.services.client.preprocessors import TqPreprocessor
 from src.services.client.preprocessors import TnPreprocessor
 from src.services.converters.md2html_converter import Md2HtmlConverter
 from src.general_tools.file_utils import remove_tree, unzip, remove
 from src.door43_tools.bible_books import BOOK_NUMBERS
-from bs4 import BeautifulSoup
 from src.app.app import App
 
 

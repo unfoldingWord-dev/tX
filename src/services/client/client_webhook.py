@@ -5,17 +5,18 @@ import tempfile
 import json
 import hashlib
 from datetime import datetime, timedelta
-from general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
-from general_tools.url_utils import download_file
-from resource_container.ResourceContainer import RC
-from services.client.preprocessors import do_preprocess
-from models.manifest import TxManifest
-from models.module import TxModule
-from app.app import App
-from models.job import TxJob
 
 from flask import request, url_for
 from flask_api import status
+
+from src.general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
+from src.general_tools.url_utils import download_file
+from src.resource_container.ResourceContainer import RC
+from src.services.client.preprocessors import do_preprocess
+from src.models.manifest import TxManifest
+from src.models.module import TxModule
+from src.models.job import TxJob
+from src.app.app import App
 
 
 def ClientWebhookHandler():

@@ -1,11 +1,12 @@
 from __future__ import unicode_literals
 import os
 import re
-from door43_tools.td_language import TdLanguage
-from door43_tools.bible_books import BOOK_NAMES
-from general_tools.file_utils import load_json_object, load_yaml_object, read_file
 from datetime import datetime
 from glob import glob
+
+from src.door43_tools.td_language import TdLanguage
+from src.door43_tools.bible_books import BOOK_NAMES
+from src.general_tools.file_utils import load_json_object, load_yaml_object, read_file
 
 resource_map = {
     'udb': {
@@ -110,7 +111,7 @@ class RC:
     def as_dict(self):
         """
         Return a proper dict object of the manifest
-        :return dict: 
+        :return dict:
         """
         return {
             'dublin_core': {
@@ -310,8 +311,8 @@ class RC:
 class Resource:
     def __init__(self, rc, resource):
         """
-        :param RC rc: 
-        :param dict resource: 
+        :param RC rc:
+        :param dict resource:
         """
         self.rc = rc
         self.resource = resource
@@ -339,7 +340,7 @@ class Resource:
     def file_ext(self):
         """
         File extension of this type of resource, such as md or usfm
-        :return string: 
+        :return string:
         """
         return {
             'text/usx': 'usx',
@@ -507,8 +508,8 @@ class Resource:
 class Language:
     def __init__(self, rc, language):
         """
-        :param RC rc: 
-        :param dict language: 
+        :param RC rc:
+        :param dict language:
         """
         self.rc = rc
         self.language = language
@@ -548,8 +549,8 @@ class Language:
 class Project:
     def __init__(self, rc, project=None):
         """
-        :param RC rc: 
-        :param dict project: 
+        :param RC rc:
+        :param dict project:
         """
         self.rc = rc
         self.project = project

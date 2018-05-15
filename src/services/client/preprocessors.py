@@ -3,10 +3,11 @@ import os
 import re
 from glob import glob
 from shutil import copy
-from app.app import App
-from door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
-from general_tools.file_utils import write_file, read_file
-from resource_container.ResourceContainer import RC
+
+from src.app.app import App
+from src.door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
+from src.general_tools.file_utils import write_file, read_file
+from src.resource_container.ResourceContainer import RC
 
 
 def do_preprocess(rc, repo_dir, output_dir):
@@ -40,9 +41,9 @@ class Preprocessor(object):
 
     def __init__(self, rc, source_dir, output_dir):
         """
-        :param RC rc: 
-        :param string source_dir: 
-        :param string output_dir: 
+        :param RC rc:
+        :param string source_dir:
+        :param string output_dir:
         """
         self.rc = rc
         self.source_dir = source_dir  # Local directory
@@ -345,10 +346,10 @@ class TaPreprocessor(Preprocessor):
         """
         Recursive section markdown creator
 
-        :param project: 
-        :param dict section: 
-        :param int level: 
-        :return: 
+        :param project:
+        :param dict section:
+        :param int level:
+        :return:
         """
         if 'link' in section:
             link = section['link']

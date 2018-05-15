@@ -6,11 +6,12 @@ import time
 import traceback
 from glob import glob
 from shutil import copyfile
-from general_tools import file_utils
-from general_tools.file_utils import write_file, remove_tree
-from door43_tools.templaters import init_template
 from datetime import datetime, timedelta
-from app.app import App
+
+from src.general_tools import file_utils
+from src.general_tools.file_utils import write_file, remove_tree
+from src.door43_tools.templaters import init_template
+from src.app.app import App
 
 
 class ProjectDeployer(object):

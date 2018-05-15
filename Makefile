@@ -12,7 +12,7 @@ run:
 	python2 src/main.py
 
 test:
-	python2 -m unittest discover
+	python2 -m unittest discover -s tests/
 
 dependencies:
 	pip install -r requirements.txt

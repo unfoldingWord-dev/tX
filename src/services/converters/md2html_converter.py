@@ -6,7 +6,8 @@ import markdown2
 import codecs
 from shutil import copyfile
 from bs4 import BeautifulSoup
-from general_tools.file_utils import write_file, get_files
+
+from src.general_tools.file_utils import write_file, get_files
 from converter import Converter
 
 

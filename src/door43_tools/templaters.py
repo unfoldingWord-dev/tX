@@ -3,11 +3,12 @@ import os
 import codecs
 from glob import glob
 from bs4 import BeautifulSoup
-from general_tools import file_utils
-from general_tools.file_utils import write_file
-from resource_container.ResourceContainer import RC
-from general_tools.file_utils import load_yaml_object
-from app.app import App
+
+from src.general_tools import file_utils
+from src.general_tools.file_utils import write_file
+from src.resource_container.ResourceContainer import RC
+from src.general_tools.file_utils import load_yaml_object
+from src.app.app import App
 
 
 def do_template(resource_type, source_dir, output_dir, template_file):
@@ -111,7 +112,7 @@ class Templater(object):
             with codecs.open(fname, 'r', 'utf-8-sig') as f:
                 soup = BeautifulSoup(f, 'html.parser')
             if soup.select('div#content h1'):
-                title = soup.select('div#content h1')[0].text.strip() 
+                title = soup.select('div#content h1')[0].text.strip()
             else:
                 title = os.path.splitext(os.path.basename(fname))[0].replace('_', ' ').capitalize()
 
@@ -273,7 +274,7 @@ class TqTemplater(Templater):
             with codecs.open(fname, 'r', 'utf-8-sig') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
             if soup.select('div#content h1'):
-                title = soup.select('div#content h1')[0].text.strip() 
+                title = soup.select('div#content h1')[0].text.strip()
             else:
                 title = '{0}.'.format(book_code)
             self.titles[key] = title
@@ -474,7 +475,7 @@ class BibleTemplater(Templater):
             with codecs.open(fname, 'r', 'utf-8-sig') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
             if soup.select('div#content h1'):
-                title = soup.select('div#content h1')[0].text.strip() 
+                title = soup.select('div#content h1')[0].text.strip()
             else:
                 title = '{0}.'.format(book_code)
             self.titles[key] = title
@@ -539,8 +540,8 @@ class TaTemplater(Templater):
     def build_section_toc(self, section):
         """
         Recursive section toc builder
-        :param dict section: 
-        :return: 
+        :param dict section:
+        :return:
         """
         if 'link' in section:
             link = section['link']
@@ -552,7 +553,7 @@ class TaTemplater(Templater):
                 <a href="#{0}">{1}</a>
             """.format(link, section['title'])
         if 'sections' in section:
-            html += """ 
+            html += """
                 <a href="#" data-target="#{0}-sub" data-toggle="collapse" class="content-nav-expand collapsed"></a>
                 <ul id="{0}-sub" class="collapse">
             """.format(link)
@@ -576,7 +577,7 @@ class TaTemplater(Templater):
             with codecs.open(fname, 'r', 'utf-8-sig') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
             if soup.select('div#content h1'):
-                title = soup.select('div#content h1')[0].text.strip() 
+                title = soup.select('div#content h1')[0].text.strip()
             else:
                 title = os.path.splitext(os.path.basename(fname))[0].title()
             if title in self.NO_NAV_TITLES:

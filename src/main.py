@@ -5,6 +5,10 @@ This module bootstraps the API setup and registers all of the available services
 from flask import request
 from flask_api import FlaskAPI
 from service_manager import ServiceManager
+
+from sys import path as sysPath
+sysPath.append('.')
+
 from services.sample import sample_service
 from services.client.client_webhook import ClientWebhookHandler
 #from services.client.client_converter_callback import ClientConverterCallback

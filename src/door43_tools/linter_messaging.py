@@ -1,5 +1,6 @@
 from __future__ import print_function, unicode_literals
-from door43_tools.messaging_service import MessagingService
+
+from src.door43_tools.messaging_service import MessagingService
 
 
 class LinterMessaging(MessagingService):

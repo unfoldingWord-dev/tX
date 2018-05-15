@@ -4,9 +4,10 @@ import tempfile
 import codecs
 from bs4 import BeautifulSoup
 from glob import glob
-from general_tools.file_utils import read_file
-from resource_container.ResourceContainer import RC
-from app.app import App
+
+from src.general_tools.file_utils import read_file
+from src.resource_container.ResourceContainer import RC
+from src.app.app import App
 
 
 class ProjectPrinter(object):
@@ -22,8 +23,8 @@ class ProjectPrinter(object):
 
     def print_project(self, project_id):
         """
-        :param string project_id: 
-        :return string: 
+        :param string project_id:
+        :return string:
         """
         self.project_id = project_id
         if len(project_id.split('/')) != 3:

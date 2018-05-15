@@ -3,11 +3,12 @@ import json
 import os
 import tempfile
 from datetime import datetime
-from app.app import App
-from client.client_linter_callback import ClientLinterCallback
-from general_tools.file_utils import unzip, write_file, remove_tree, remove
-from general_tools.url_utils import download_file
-from models.job import TxJob
+
+from src.app.app import App
+from src.client.client_linter_callback import ClientLinterCallback
+from src.general_tools.file_utils import unzip, write_file, remove_tree, remove
+from src.general_tools.url_utils import download_file
+from src.models.job import TxJob
 
 
 class ClientConverterCallback(object):

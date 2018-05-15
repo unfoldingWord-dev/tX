@@ -5,16 +5,13 @@ import tempfile
 import traceback
 import urlparse
 import requests
-
-from sys import path as sysPath
-sysPath.append('src/') # So unit tests can find imports
-
-from general_tools.url_utils import download_file
-from general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
-from app.app import App
 from shutil import copy
-from convert_logger import ConvertLogger
 from abc import ABCMeta, abstractmethod
+
+from src.general_tools.url_utils import download_file
+from src.general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
+from src.app.app import App
+from convert_logger import ConvertLogger
 
 
 class Converter(object):
