@@ -9,7 +9,7 @@ PARENT_DIR="$( dirname "${REPO_DIR}" )"
 #fi
 #URL="https://github.com/apex/apex/releases/download/${LATEST}/apex_${LATEST#v}_linux_amd64.tar.gz"
 
-URL="https://github.com/apex/apex/releases/download/v1.0.0-rc2/apex_1.0.0-rc2_linux_amd64.tar.gz"
+URL="https://github.com/apex/apex/releases/download/v1.0.0-rc3/apex_1.0.0-rc3_linux_amd64.tar.gz"
 
 cd ${PARENT_DIR}
 curl -sL ${URL} -o apex.tar.gz
