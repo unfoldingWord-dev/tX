@@ -2,7 +2,7 @@ master:
 
 .. image:: https://travis-ci.org/unfoldingWord-dev/tx.svg?branch=master
     :alt: Build Status
-    :target: https://travis-ci.org/unfoldingWord-dev/tx
+    :target: https://travis-ci.org/unfoldingWord-dev/tx?branch=master
 
 .. image:: https://coveralls.io/repos/github/unfoldingWord-dev/tx/badge.svg?branch=master
     :alt: Coveralls
@@ -12,7 +12,7 @@ tx-manager-integration:
 
 .. image:: https://travis-ci.org/unfoldingWord-dev/tx.svg?branch=tx-manager-integration
     :alt: Build Status
-    :target: https://travis-ci.org/unfoldingWord-dev/tx
+    :target: https://travis-ci.org/unfoldingWord-dev/tx?branch=tx-manager-integration
 
 .. image:: https://coveralls.io/repos/github/unfoldingWord-dev/tx/badge.svg?branch=tx-manager-integration
     :alt: Coveralls
