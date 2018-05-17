@@ -11,13 +11,14 @@ from abc import ABCMeta, abstractmethod
 from src.general_tools.url_utils import download_file
 from src.general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
 from src.app.app import App
-from convert_logger import ConvertLogger
+from .convert_logger import ConvertLogger
 
 
 class Converter(object):
     __metaclass__ = ABCMeta
 
-    EXCLUDED_FILES = ["license.md", "package.json", "project.json", 'readme.md']
+    # NOTE: get_file does both a case sensitive compare AND a lowercase compare
+    EXCLUDED_FILES = ["license.md", "package.json", "project.json", 'readme.md', 'readme.rst']
 
     def __init__(self, source, resource, cdn_file=None, options=None, convert_callback=None, identifier=None):
         """

@@ -36,8 +36,9 @@ def do_preprocess(rc, repo_dir, output_dir):
 
 
 class Preprocessor(object):
+    # NOTE: Both of these lists are used for case-sensitive comparisons
     ignoreDirectories = ['.git', '00']
-    ignoreFiles = ['.DS_Store', 'reference.txt', 'title.txt', 'LICENSE.md', 'README.md']
+    ignoreFiles = ['.DS_Store', 'reference.txt', 'title.txt', 'LICENSE.md', 'README.md', 'README.rst']
 
     def __init__(self, rc, source_dir, output_dir):
         """

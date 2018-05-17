@@ -8,7 +8,7 @@ from shutil import copyfile
 
 from usfm_tools.transform import UsfmTransform
 
-from converter import Converter
+from .converter import Converter
 from src.general_tools.file_utils import write_file, remove_tree, get_files
 from src.app.app import App
 
