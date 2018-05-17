@@ -53,7 +53,7 @@ Now load that virtual environment and install dependencies:
 Development
 -----------
 
-All of the development commands have been place in a makefile for easy use.
+All of the development commands have been placed in a makefile for easy use.
 
 * `make` or `make doc` generates the documentation.
 * `make dependencies` install the dependencies.
