@@ -34,13 +34,13 @@ Satisfy basic depedencies:
 
     git clone git@github.com:unfoldingWord-dev/tx.git
     sudo apt-get install python-pip
-    pip install virtualenv
+    pip2 install virtualenv
 
 We recommend you create a Python virtual environment to help manage Python package dependencies:
 
 .. code-block:: bash
 
-    cd tx-manager
+    cd tx
     virtualenv venv
 
 Now load that virtual environment and install dependencies:
@@ -48,7 +48,7 @@ Now load that virtual environment and install dependencies:
 .. code-block:: bash
 
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip2 install -r requirements.txt
 
 Development
 -----------

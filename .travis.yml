@@ -3,12 +3,12 @@ python:
   - '2.7.13'
 
 before_install:
-  - pip install awscli
+  - pip2 install awscli
   - scripts/travis_install_apex.sh
 
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
+  - pip2 install -r requirements.txt
+  - pip2 install coveralls
 
 script: coverage run -m unittest discover -s tests/
 

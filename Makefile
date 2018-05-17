@@ -15,4 +15,4 @@ test:
 	python2 -m unittest discover -s tests/
 
 dependencies:
-	pip install -r requirements.txt
+	pip2 install -r requirements.txt
