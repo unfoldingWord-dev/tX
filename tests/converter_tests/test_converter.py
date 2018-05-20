@@ -142,12 +142,13 @@ class TestConverter(unittest.TestCase):
         mock_response.reason = response_string
         mock_request_post.return_value = mock_response
 
-    def validate_response(self, results, converter, expected_response_code, valid_identifier=True):
+    def validate_response(self, results, converter, expected_response_code, expected_success=True, valid_identifier=True):
         self.assertEquals(converter.callback_status, expected_response_code)
         self.assertTrue('identifier' in converter.callback_results)
         if valid_identifier:
             self.assertIsNotNone(converter.callback_results['identifier'])
         self.assertEquals(results, converter.callback_results)
+        self.assertEquals(results['success'], expected_success)
 
     def make_duplicate_zip_that_can_be_deleted(self, zip_file):
         in_zip_file = tempfile.mktemp(prefix="test_data", suffix=".zip", dir=self.temp_dir)
