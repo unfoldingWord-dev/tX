@@ -8,7 +8,7 @@ from shutil import copyfile
 from bs4 import BeautifulSoup
 
 from src.general_tools.file_utils import write_file, get_files
-from converter import Converter
+from .converter import Converter
 
 
 class Md2HtmlConverter(Converter):

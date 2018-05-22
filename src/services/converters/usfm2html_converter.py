@@ -1,5 +1,8 @@
 from __future__ import print_function, unicode_literals
-import urlparse
+try:
+    import urlparse
+except ModuleNotFoundError:
+    from urllib.parse import urlparse
 import os
 import tempfile
 import codecs

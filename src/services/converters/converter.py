@@ -3,7 +3,10 @@ import json
 import os
 import tempfile
 import traceback
-import urlparse
+try:
+    import urlparse
+except ModuleNotFoundError:
+    from urllib.parse import urlparse
 import requests
 from shutil import copy
 from abc import ABCMeta, abstractmethod

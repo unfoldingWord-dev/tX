@@ -1,6 +1,9 @@
 from __future__ import print_function, unicode_literals
 import re
-import urlparse
+try:
+    import urlparse
+except ModuleNotFoundError:
+    from urllib.parse import urlparse
 from decimal import Decimal
 from datetime import datetime
 from operator import itemgetter
