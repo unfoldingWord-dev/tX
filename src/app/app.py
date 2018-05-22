@@ -1,5 +1,6 @@
 from __future__ import unicode_literals, print_function
 import sys
+import os
 import logging
 import re
 from sqlalchemy import *
@@ -57,11 +58,11 @@ class App(object):
     For all things used for by this app, from DB connection to global handlers
     """
     _resetable_cache_ = {}
-    name = 'tx-manager'
+    name = 'tx-new'
     dirty = False
 
     # Stage Variables, defaults
-    prefix = ''
+    prefix = '' # was empty
     api_url = 'https://api.door43.org'
     pre_convert_bucket = 'tx-webhook-client'
     cdn_bucket = 'cdn.door43.org'
@@ -73,9 +74,11 @@ class App(object):
     module_table_name = 'modules'
     language_stats_table_name = 'language-stats'
     linter_messaging_name = 'linter_complete'
+
+    # DB setup -- get the pw from the environment variable
     db_protocol = 'mysql+pymysql'
-    db_user = 'tx'
-    db_pass = None
+    db_user = 'tx-dev' # was 'tx'
+    db_pass = os.environ['TX_DEV_DB_PW']
     db_end_point = 'd43-gogs.ccidwldijq9p.us-west-2.rds.amazonaws.com'
     db_port = '3306'
     db_name = 'tx'
@@ -95,9 +98,9 @@ class App(object):
     db_echo = False  # Whether or not to echo DB queries to the debug log. Useful for debugging. Set before setup_db()
     echo = False
 
-    # Credentials
-    aws_access_key_id = None
-    aws_secret_access_key = None
+    # Credentials -- get the secret ones from environment variables
+    aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
+    aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
     aws_region_name = 'us-west-2'
 
     # Handlers
