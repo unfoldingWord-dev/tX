@@ -8,11 +8,17 @@ clean_doc:
 	cd docs && rm -f source/src.rst
 	cd docs && rm -f source/src.*.rst
 
-run:
-	python2 src/main.py
+dependencies:
+	pip2 install -r requirements.txt
+
+# NOTE: The following environment variables are expected to be set:
+#	AWS_ACCESS_KEY_ID
+#	AWS_SECRET_KEY
+#	TX_DEV_DB_PW
 
 test:
 	python2 -m unittest discover -s tests/
 
-dependencies:
-	pip2 install -r requirements.txt
+run:
+	python2 src/main.py
+#           and then browse to 127.0.0.1:5000
