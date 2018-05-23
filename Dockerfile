@@ -17,7 +17,7 @@ ENV PYTHONPATH .
 #	TX_PREFIX (optional)
 #	TX_DATABASE_PW
 #	AWS_ACCESS_KEY_ID
-#	AWS_SECRET_KEY
+#	AWS_SECRET_ACCESS_KEY
 
 CMD [ "python2", "src/main.py" ]
 
