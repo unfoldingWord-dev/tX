@@ -12,9 +12,10 @@ dependencies:
 	pip2 install -r requirements.txt
 
 # NOTE: The following environment variables are expected to be set:
+#	TX_PREFIX (optional)
+#	TX_DATABASE_PW
 #	AWS_ACCESS_KEY_ID
 #	AWS_SECRET_KEY
-#	TX_DEV_DB_PW
 
 test:
 	python2 -m unittest discover -s tests/

@@ -14,9 +14,10 @@ EXPOSE 5000
 ENV PYTHONPATH .
 
 # NOTE: The following environment variables are also expected to be set:
+#	TX_PREFIX (optional)
+#	TX_DATABASE_PW
 #	AWS_ACCESS_KEY_ID
 #	AWS_SECRET_KEY
-#	TX_DEV_DB_PW
 
 CMD [ "python2", "src/main.py" ]
 
