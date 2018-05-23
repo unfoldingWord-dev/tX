@@ -147,11 +147,23 @@ class ClientWebhook(object):
         # Upload zipped file to the S3 bucket
         file_key = self.upload_zip_file(commit_id, zip_filepath)
 
+        #print("ClientWebhook.process_webhook preparing to setup TxJob with {!r}...".format(App.gogs_user_token))
+        #if not App.gogs_user_token: halt
+        #user = App.gogs_handler().get_user(App.gogs_user_token)
+        #print("Got user:",user)
+        #if not user: halt
+        class UserClass:
+            def __init__(self, username): self.username = username
+        user = UserClass(user_name) # TEMP TRY XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        App.logger.error("TEMPORARILY USED {!r} as GOGS username XXXXXXXX Where should we really get it from?".format(user_name))
+
+        print("ClientWebhook.process_webhook setting up TxJob with username{0}...".format(user.username))
         job = TxJob()
         job.job_id = self.get_unique_job_id()
         job.identifier = job.job_id
         job.user_name = user_name
         job.repo_name = repo_name
+        print("Job user_name={!r} repo_name={!r}".format(job.user_name, job.repo_name))
         job.commit_id = commit_id
         job.manifests_id = tx_manifest.id
         job.created_at = datetime.utcnow()
