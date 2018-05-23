@@ -33,7 +33,6 @@ class TxModel(object):
         """
         if args:
             kwargs[inspect(cls).primary_key[0].name] = args[0]
-        print("TxModel.get kwargs:", kwargs)
         item = cls.query(**kwargs).first()
         App.db().close()
         return item
