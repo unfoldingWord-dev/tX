@@ -62,7 +62,7 @@ class App(object):
     dirty = False
 
     # Stage Variables, defaults
-    prefix = '' # was empty
+    prefix = os.getenv('TX_PREFIX','') # expects 'dev-' for development mode, empty/missing for production mode
     api_url = 'https://api.door43.org'
     pre_convert_bucket = 'tx-webhook-client'
     cdn_bucket = 'cdn.door43.org'
@@ -77,8 +77,8 @@ class App(object):
 
     # DB setup -- get the pw from the environment variable
     db_protocol = 'mysql+pymysql'
-    db_user = 'tx-dev' # was 'tx'
-    db_pass = os.environ['TX_DEV_DB_PW']
+    db_user = 'tx'
+    db_pass = os.environ['TX_DATABASE_PW']
     db_end_point = 'd43-gogs.ccidwldijq9p.us-west-2.rds.amazonaws.com'
     db_port = '3306'
     db_name = 'tx'
@@ -107,7 +107,7 @@ class App(object):
     _db_engine = None
     _db_session = None
     _cdn_s3_handler = None
-    _door43_s3_handler = None
+    _door43_s3_handlsrcer = None
     _pre_convert_s3_handler = None
     _language_stats_db_handler = None
     _lambda_handler = None
@@ -131,11 +131,15 @@ class App(object):
         :param bool reset:
         :param kwargs:
         """
+        print("App.init() with kwargs=",kwargs)
         if cls.dirty and reset:
             App.db_close()
             reset_class(App)
-        if 'prefix' in kwargs and kwargs['prefix'] != cls.prefix:
-            cls.prefix_vars(kwargs['prefix'])
+        #if 'prefix' in kwargs and kwargs['prefix'] != cls.prefix:
+            #cls.prefix_vars(kwargs['prefix'])
+        # We get our prefix from the environment
+        if cls.prefix:
+            cls.prefix_vars(cls.prefix)
         cls.set_vars(**kwargs)
 
     @classmethod
@@ -144,6 +148,7 @@ class App(object):
         Prefixes any variables in App.prefixable_variables. This includes URLs
         :return:
         """
+        print("App.prefix_vars with {!r}".format(prefix))
         url_re = re.compile(r'^(https*://)')  # Current prefix in URLs
         for var in cls.prefixable_vars:
             value = getattr(App, var)
@@ -233,6 +238,10 @@ class App(object):
         """
         :param mixed echo:
         """
+        print("App.db({0}) class method running...".format(echo))
+        if cls.prefix:
+            cls.prefix_vars(cls.prefix)
+            cls.prefix = '' # So we don't repeat this again
         if not cls._db_session:
             cls._db_session = sessionmaker(bind=cls.db_engine(echo), expire_on_commit=False)()
             from models.manifest import TxManifest
