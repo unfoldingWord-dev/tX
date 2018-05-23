@@ -107,7 +107,7 @@ class App(object):
     _db_engine = None
     _db_session = None
     _cdn_s3_handler = None
-    _door43_s3_handlsrcer = None
+    _door43_s3_handler = None
     _pre_convert_s3_handler = None
     _language_stats_db_handler = None
     _lambda_handler = None
@@ -156,6 +156,7 @@ class App(object):
                 value = re.sub(url_re, r'\1{0}'.format(prefix), value)
             else:
                 value = prefix + value
+            print("  With prefix now {}={!r}".format(var,value))
             setattr(App, var, value)
         cls.prefix = prefix
         cls.dirty = True
@@ -239,9 +240,9 @@ class App(object):
         :param mixed echo:
         """
         print("App.db({0}) class method running...".format(echo))
-        if cls.prefix:
+        # Haven't found the best/right place to run this prefix_vars class method yet
+        if cls.prefix and not cls.db_name.startswith(cls.prefix): # don't want to apply the prefix multiple times
             cls.prefix_vars(cls.prefix)
-            cls.prefix = '' # So we don't repeat this again
         if not cls._db_session:
             cls._db_session = sessionmaker(bind=cls.db_engine(echo), expire_on_commit=False)()
             from models.manifest import TxManifest
@@ -268,8 +269,11 @@ class App(object):
 
     @classmethod
     def construct_connection_string(cls):
+        print("App.construct_connection_string()...")
         db_connection_string = cls.db_protocol+'://'
         if cls.db_user:
+            print("  Have user {!r}".format(cls.db_user))
+            assert cls.db_user.startswith('dev-') # for RJH testing assurance only XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             db_connection_string += cls.db_user
             if cls.db_pass:
                 db_connection_string += ':'+cls.db_pass
@@ -283,4 +287,5 @@ class App(object):
             db_connection_string += '/'+cls.db_name
         if cls.db_connection_string_params:
             db_connection_string += '?'+cls.db_connection_string_params
+        print( "  Returning", db_connection_string )
         return db_connection_string
