@@ -314,14 +314,16 @@ class ProjectDeployer(object):
             i += 1
             last_modified = obj.last_modified.replace(tzinfo=None)
             if one_day_ago <= last_modified:
+                print("Skipping because more than one day ago - RJH")
                 continue
-            App.lambda_handler().invoke(
-                FunctionName=deploy_function,
-                InvocationType='Event',
-                LogType='Tail',
-                Payload=json.dumps({
-                    'prefix': App.prefix,
-                    'build_log_key': obj.key
-                })
-            )
+            print("ProjectDeployer.redeploy_all_projects wanted to invoke Lambda with fn={}".format(deploy_function))
+            #App.lambda_handler().invoke(
+                #FunctionName=deploy_function,
+                #InvocationType='Event',
+                #LogType='Tail',
+                #Payload=json.dumps({
+                    #'prefix': App.prefix,
+                    #'build_log_key': obj.key
+                #})
+            #)
         return True

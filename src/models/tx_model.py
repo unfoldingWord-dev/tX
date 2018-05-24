@@ -1,7 +1,9 @@
 from __future__ import unicode_literals, print_function
-from sqlalchemy import inspect
 from datetime import datetime, date
-from app.app import App
+
+from sqlalchemy import inspect
+
+from src.app.app import App
 
 
 class TxModel(object):

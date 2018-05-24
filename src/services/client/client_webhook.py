@@ -58,6 +58,7 @@ def ClientWebhookHandler():
 
     webhook = ClientWebhook(request.data)
     webhook.process_webhook()
+    print("ClientWebhookHandler() has finished")
 
 
 class ClientWebhook(object):
@@ -121,8 +122,10 @@ class ClientWebhook(object):
             'manifest': json.dumps(rc.as_dict()),
             'last_updated': datetime.utcnow()
         }
-        print("client_webhook got manifest_data:", manifest_data )
+        print("client_webhook got manifest_data:", manifest_data ) # RJH
         # First see if manifest already exists in DB and update it if it is
+        print("client_webhook getting manifest for {!r} with user {!r}".format(repo_name,user_name)) # RJH
+        # RJH: Next line always fails on the first call! Why?
         tx_manifest = TxManifest.get(repo_name=repo_name, user_name=user_name)
         if tx_manifest:
             for key, value in manifest_data.iteritems():
@@ -147,27 +150,18 @@ class ClientWebhook(object):
         # Upload zipped file to the S3 bucket
         file_key = self.upload_zip_file(commit_id, zip_filepath)
 
-        #print("ClientWebhook.process_webhook preparing to setup TxJob with {!r}...".format(App.gogs_user_token))
-        #if not App.gogs_user_token: halt
-        #user = App.gogs_handler().get_user(App.gogs_user_token)
-        #print("Got user:",user)
-        #if not user: halt
-        class UserClass:
-            def __init__(self, username): self.username = username
-        user = UserClass(user_name) # TEMP TRY XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        App.logger.error("TEMPORARILY USED {!r} as GOGS username XXXXXXXX Where should we really get it from?".format(user_name))
-
-        print("ClientWebhook.process_webhook setting up TxJob with username{0}...".format(user.username))
+        #print("ClientWebhook.process_webhook setting up TxJob with username={0}...".format(user.username))
+        print("ClientWebhook.process_webhook setting up TxJob...")
         job = TxJob()
         job.job_id = self.get_unique_job_id()
         job.identifier = job.job_id
         job.user_name = user_name
         job.repo_name = repo_name
-        print("Job user_name={!r} repo_name={!r}".format(job.user_name, job.repo_name))
         job.commit_id = commit_id
         job.manifests_id = tx_manifest.id
         job.created_at = datetime.utcnow()
-        job.user = user.username  # Username of the token, not necessarily the repo's owner
+        # Seems never used (RJH)
+        #job.user = user.username  # Username of the token, not necessarily the repo's owner
         job.input_format = rc.resource.file_ext
         job.resource_type = rc.resource.identifier
         job.source = self.source_url_base + "/" + file_key
@@ -278,6 +272,7 @@ class ClientWebhook(object):
                         self.send_request_to_linter(book_job, linter, commit_url, extra_payload)
 
         remove_tree(self.base_temp_dir)  # cleanup
+        print("process_webhook() is returning:", build_log_json )
         return build_log_json
 
     def build_multipart_source(self, file_key, book):
@@ -301,7 +296,7 @@ class ClientWebhook(object):
         build_log_file = os.path.join(self.base_temp_dir, 'build_log.json')
         write_file(build_log_file, build_log)
         upload_key = '{0}/{1}build_log.json'.format(s3_commit_key, part)
-        App.logger.debug('Saving build log to ' + upload_key)
+        App.logger.debug('Saving build log to {}/{}'.format(App.cdn_bucket,upload_key))
         App.cdn_s3_handler().upload_file(build_log_file, upload_key, cache_time=0)
         # App.logger.debug('build log contains: ' + json.dumps(build_log_json))
 
@@ -406,7 +401,7 @@ class ClientWebhook(object):
         :param TxModule converter:
         :return bool:
         """
-        # TODO: Make this use urllib2 to make a async POST to the API. Currently invokes Lambda directly
+        # TODO: Make this use urllib2 to make a async POST to the API. Currently invokes Lambda directly XXXXXXXXXXXXXXXXX
         payload = {
             'data': payload,
             'vars': {
@@ -415,8 +410,11 @@ class ClientWebhook(object):
         }
         App.logger.debug('Sending Payload to converter {0}:'.format(converter.name))
         App.logger.debug(payload)
-        conveter_function = '{0}tx_convert_{1}'.format(App.prefix, converter.name)
-        response = App.lambda_handler().invoke(function_name=conveter_function, payload=payload, async=True)
+        converter_function = '{0}tx_convert_{1}'.format(App.prefix, converter.name)
+        print("send_payload_to_converter: converter_function is {!r} payload={}".format(converter_function,payload))
+        # TODO: Put an alternative function call in here RJH
+        #response = App.lambda_handler().invoke(function_name=converter_function, payload=payload, async=True)
+        response = {'What?':'Did no conversion!'}
         App.logger.debug('finished.')
         return response
 
@@ -462,7 +460,10 @@ class ClientWebhook(object):
         App.logger.debug('Sending Payload to linter {0}:'.format(linter.name))
         App.logger.debug(payload)
         linter_function = '{0}tx_lint_{1}'.format(App.prefix, linter.name)
-        response = App.lambda_handler().invoke(function_name=linter_function, payload=payload, async=True)
+        print("send_payload_to_linter: linter_function is {!r}, payload={}".format(linter_function,payload))
+        # TODO: Put an alternative function call in here RJH
+        #response = App.lambda_handler().invoke(function_name=linter_function, payload=payload, async=True)
+        response = {'What?':'Did no linting!'}
         App.logger.debug('finished.')
         return response
 

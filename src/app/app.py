@@ -10,7 +10,7 @@ from sqlalchemy.pool import NullPool
 
 from src.aws_tools.s3_handler import S3Handler
 from src.aws_tools.dynamodb_handler import DynamoDBHandler
-from src.aws_tools.lambda_handler import LambdaHandler
+#from src.aws_tools.lambda_handler import LambdaHandler
 from src.gogs_tools.gogs_handler import GogsHandler
 
 
@@ -20,6 +20,7 @@ def resetable(cls):
 
 
 def reset_class(cls):
+    print("reset_class()!!!")
     cache = cls._resetable_cache_  # raises AttributeError on class without decorator
     for key in [key for key in cls.__dict__ if key not in cache and key != '_resetable_cache_']:
         delattr(cls, key)
@@ -63,32 +64,32 @@ class App(object):
 
     # Stage Variables, defaults
     prefix = os.getenv('TX_PREFIX','') # expects 'dev-' for development mode, empty/missing for production mode
-    api_url = 'https://api.door43.org'
-    pre_convert_bucket = 'tx-webhook-client'
-    cdn_bucket = 'cdn.door43.org'
-    door43_bucket = 'door43.org'
+    api_url = 'https://{}api.door43.org'.format(prefix)
+    pre_convert_bucket = prefix + 'tx-webhook-client'
+    cdn_bucket = prefix + 'cdn.door43.org'
+    door43_bucket = prefix + 'door43.org'
     gogs_user_token = None
     gogs_url = 'https://git.door43.org'
     gogs_domain_name = 'git.door43.org'
     gogs_ip_address = '127.0.0.1'
     module_table_name = 'modules'
-    language_stats_table_name = 'language-stats'
-    linter_messaging_name = 'linter_complete'
+    language_stats_table_name = prefix + 'language-stats'
+    linter_messaging_name = prefix + 'linter_complete'
 
     # DB setup -- get the pw from the environment variable
     db_protocol = 'mysql+pymysql'
-    db_user = 'tx'
+    db_user = prefix + 'tx'
     db_pass = os.environ['TX_DATABASE_PW']
     db_end_point = 'd43-gogs.ccidwldijq9p.us-west-2.rds.amazonaws.com'
     db_port = '3306'
-    db_name = 'tx'
+    db_name = prefix + 'tx'
     db_connection_string = None
     db_connection_string_params = 'charset=utf8mb4&use_unicode=0'
 
-    # Prefixing vars
-    # All variables that we change based on production, development and testing environments.
-    prefixable_vars = ['api_url', 'pre_convert_bucket', 'cdn_bucket', 'door43_bucket', 'language_stats_table_name',
-                       'linter_messaging_name', 'db_name', 'db_user']
+    ## Prefixing vars
+    ## All variables that we change based on production, development and testing environments.
+    #prefixable_vars = ['api_url', 'pre_convert_bucket', 'cdn_bucket', 'door43_bucket', 'language_stats_table_name',
+                       #'linter_messaging_name', 'db_name', 'db_user']
 
     # DB related
     Base = declarative_base()  # To be used in all model classes as the parent class: App.ModelBase
@@ -110,7 +111,7 @@ class App(object):
     _door43_s3_handler = None
     _pre_convert_s3_handler = None
     _language_stats_db_handler = None
-    _lambda_handler = None
+    #_lambda_handler = None
     _gogs_handler = None
 
     # Logger
@@ -122,6 +123,7 @@ class App(object):
         Using init to set the class variables with App(var=value)
         :param kwargs:
         """
+        print("App.__init__({})".format(kwargs))
         self.init(**kwargs)
 
     @classmethod
@@ -131,38 +133,37 @@ class App(object):
         :param bool reset:
         :param kwargs:
         """
-        print("App.init() with kwargs=",kwargs)
+        print("App.init(reset={}, {})".format(reset,kwargs))
         if cls.dirty and reset:
             App.db_close()
             reset_class(App)
         #if 'prefix' in kwargs and kwargs['prefix'] != cls.prefix:
             #cls.prefix_vars(kwargs['prefix'])
-        # We get our prefix from the environment
-        if cls.prefix:
-            cls.prefix_vars(cls.prefix)
         cls.set_vars(**kwargs)
 
-    @classmethod
-    def prefix_vars(cls, prefix):
-        """
-        Prefixes any variables in App.prefixable_variables. This includes URLs
-        :return:
-        """
-        print("App.prefix_vars with {!r}".format(prefix))
-        url_re = re.compile(r'^(https*://)')  # Current prefix in URLs
-        for var in cls.prefixable_vars:
-            value = getattr(App, var)
-            if re.match(url_re, value):
-                value = re.sub(url_re, r'\1{0}'.format(prefix), value)
-            else:
-                value = prefix + value
-            print("  With prefix now {}={!r}".format(var,value))
-            setattr(App, var, value)
-        cls.prefix = prefix
-        cls.dirty = True
+    #@classmethod
+    #def prefix_vars(cls, prefix):
+        #"""
+        #Prefixes any variables in App.prefixable_variables. This includes URLs
+        #:return:
+        #"""
+        #print("App.prefix_vars with {!r}".format(prefix))
+        #url_re = re.compile(r'^(https*://)')  # Current prefix in URLs
+        #for var in cls.prefixable_vars:
+            #value = getattr(App, var)
+            #if re.match(url_re, value):
+                #value = re.sub(url_re, r'\1{0}'.format(prefix), value)
+            #else:
+                #value = prefix + value
+            #print("  With prefix now {}={!r}".format(var,value))
+            #setattr(App, var, value)
+        #cls.prefix = prefix
+        #cls.dirty = True
 
     @classmethod
     def set_vars(cls, **kwargs):
+        print("App.set_vars()...")
+        # Sets all the given variables for the class, and then marks it as dirty
         for var, value in kwargs.iteritems():
             if hasattr(App, var):
                 setattr(App, var, value)
@@ -170,6 +171,7 @@ class App(object):
 
     @classmethod
     def cdn_s3_handler(cls):
+        print("App.cdn_s3_handler()...")
         if not cls._cdn_s3_handler:
             cls._cdn_s3_handler = S3Handler(bucket_name=cls.cdn_bucket,
                                             aws_access_key_id=cls.aws_access_key_id,
@@ -179,6 +181,7 @@ class App(object):
 
     @classmethod
     def door43_s3_handler(cls):
+        print("App.door43_s3_handler()...")
         if not cls._door43_s3_handler:
             cls._door43_s3_handler = S3Handler(bucket_name=cls.door43_bucket,
                                                aws_access_key_id=cls.aws_access_key_id,
@@ -188,6 +191,7 @@ class App(object):
 
     @classmethod
     def pre_convert_s3_handler(cls):
+        print("App.pre_convert_s3_handler()...")
         if not cls._pre_convert_s3_handler:
             cls._pre_convert_s3_handler = S3Handler(bucket_name=cls.pre_convert_bucket,
                                                     aws_access_key_id=cls.aws_access_key_id,
@@ -197,6 +201,7 @@ class App(object):
 
     @classmethod
     def language_stats_db_handler(cls):
+        print("App.language_stats_db_handler()...")
         if not cls._language_stats_db_handler:
             cls._language_stats_db_handler = DynamoDBHandler(table_name=cls.language_stats_table_name,
                                                              aws_access_key_id=cls.aws_access_key_id,
@@ -204,16 +209,17 @@ class App(object):
                                                              aws_region_name=cls.aws_region_name)
         return cls._language_stats_db_handler
 
-    @classmethod
-    def lambda_handler(cls):
-        if not cls._lambda_handler:
-            cls._lambda_handler = LambdaHandler(aws_access_key_id=cls.aws_access_key_id,
-                                                aws_secret_access_key=cls.aws_secret_access_key,
-                                                aws_region_name=cls.aws_region_name)
-        return cls._lambda_handler
+    #@classmethod
+    #def lambda_handler(cls):
+        #if not cls._lambda_handler:
+            #cls._lambda_handler = LambdaHandler(aws_access_key_id=cls.aws_access_key_id,
+                                                #aws_secret_access_key=cls.aws_secret_access_key,
+                                                #aws_region_name=cls.aws_region_name)
+        #return cls._lambda_handler
 
     @classmethod
     def gogs_handler(cls):
+        print("App.gogs_handler()...")
         if not cls._gogs_handler:
             cls._gogs_handler = GogsHandler(gogs_url=cls.gogs_url)
         return cls._gogs_handler
@@ -223,6 +229,7 @@ class App(object):
         """
         :param mixed echo:
         """
+        print("App.db_engine(echo={0}) class method running...".format(echo))
         if echo is None or not isinstance(echo, bool):
             echo = cls.echo
         if not cls._db_engine:
@@ -239,12 +246,11 @@ class App(object):
         """
         :param mixed echo:
         """
-        print("App.db({0}) class method running...".format(echo))
-        # Haven't found the best/right place to run this prefix_vars class method yet
-        if cls.prefix and not cls.db_name.startswith(cls.prefix): # don't want to apply the prefix multiple times
-            cls.prefix_vars(cls.prefix)
+        print("App.db(echo={0}) class method running...".format(echo))
         if not cls._db_session:
             cls._db_session = sessionmaker(bind=cls.db_engine(echo), expire_on_commit=False)()
+            # RJH: Why does this import always fail the first time (at the TxManifest class declaration)???
+            # Try moving the import to the top of file -- no seems it's here because of circular imports
             from models.manifest import TxManifest
             TxManifest.__table__.name = cls.manifest_table_name
             from models.job import TxJob
@@ -256,6 +262,7 @@ class App(object):
 
     @classmethod
     def db_close(cls):
+        print("App.db_close()...")
         if cls._db_session:
             cls._db_session.close_all()
             cls._db_session = None
@@ -265,6 +272,7 @@ class App(object):
 
     @classmethod
     def db_create_tables(cls, tables=None):
+        print("App.db_create_tables()...")
         cls.Base.metadata.create_all(cls.db_engine(), tables=tables)
 
     @classmethod
@@ -272,8 +280,6 @@ class App(object):
         print("App.construct_connection_string()...")
         db_connection_string = cls.db_protocol+'://'
         if cls.db_user:
-            print("  Have user {!r}".format(cls.db_user))
-            assert cls.db_user.startswith('dev-') # for RJH testing assurance only XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             db_connection_string += cls.db_user
             if cls.db_pass:
                 db_connection_string += ':'+cls.db_pass
