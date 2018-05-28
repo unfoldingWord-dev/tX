@@ -2,6 +2,13 @@ from __future__ import unicode_literals, print_function
 from datetime import datetime, date
 from dateutil.parser import parse
 
+try:
+    basestring = basestring
+    check_for_bytes = False
+except NameError: # 'basestring' is undefined, must be Python 3
+    basestring = (str,bytes)
+    check_for_bytes = True
+
 
 def mask_fields(dictionary, fields_to_mask, show_num_chars=2):
     """
@@ -13,7 +20,7 @@ def mask_fields(dictionary, fields_to_mask, show_num_chars=2):
     """
     if not dictionary or not isinstance(dictionary, dict):
         return dictionary
-    for field, value in dictionary.iteritems():
+    for field, value in dictionary.items():
         if field in fields_to_mask:
             dictionary[field] = mask_string(value)
         if isinstance(value, dict):
@@ -39,6 +46,9 @@ def json_serial(obj):
     """
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
+    if check_for_bytes and isinstance(obj,bytes):
+        return obj.decode()
+
     raise TypeError("Type %s not serializable" % type(obj))
 
 

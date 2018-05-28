@@ -3,6 +3,11 @@ import json
 import time
 import boto3
 
+try:
+    basestring = basestring
+except NameError: # 'basestring' is undefined, must be Python 3
+    basestring = (str,bytes)
+
 
 class MessagingService(object):
 

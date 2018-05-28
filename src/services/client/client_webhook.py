@@ -9,14 +9,14 @@ from datetime import datetime, timedelta
 from flask import request, url_for
 from flask_api import status
 
-from src.general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
-from src.general_tools.url_utils import download_file
-from src.resource_container.ResourceContainer import RC
-from src.services.client.preprocessors import do_preprocess
-from src.models.manifest import TxManifest
-from src.models.module import TxModule
-from src.models.job import TxJob
-from src.app.app import App
+from general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
+from general_tools.url_utils import download_file
+from resource_container.ResourceContainer import RC
+from services.client.preprocessors import do_preprocess
+from models.manifest import TxManifest
+from models.module import TxModule
+from models.job import TxJob
+from app.app import App
 
 
 def ClientWebhookHandler():
@@ -128,7 +128,7 @@ class ClientWebhook(object):
         # RJH: Next line always fails on the first call! Why?
         tx_manifest = TxManifest.get(repo_name=repo_name, user_name=user_name)
         if tx_manifest:
-            for key, value in manifest_data.iteritems():
+            for key, value in manifest_data.items():
                 setattr(tx_manifest, key, value)
             App.logger.debug('Updating manifest in manifest table: {0}'.format(manifest_data))
             tx_manifest.update()
@@ -408,9 +408,13 @@ class ClientWebhook(object):
                 'prefix': App.prefix
             }
         }
-        App.logger.debug('Sending Payload to converter {0}:'.format(converter.name))
+        converter_name = converter.name
+        if not isinstance(converter_name,str): # bytes in Python3 -- not sure where it gets set
+            converter_name = converter_name.decode()
+        print("converter_name", repr(converter_name))
+        App.logger.debug('Sending Payload to converter {0}:'.format(converter_name))
         App.logger.debug(payload)
-        converter_function = '{0}tx_convert_{1}'.format(App.prefix, converter.name)
+        converter_function = '{0}tx_convert_{1}'.format(App.prefix, converter_name)
         print("send_payload_to_converter: converter_function is {!r} payload={}".format(converter_function,payload))
         # TODO: Put an alternative function call in here RJH
         #response = App.lambda_handler().invoke(function_name=converter_function, payload=payload, async=True)
@@ -457,9 +461,13 @@ class ClientWebhook(object):
                 'prefix': App.prefix
             }
         }
-        App.logger.debug('Sending Payload to linter {0}:'.format(linter.name))
+        linter_name = linter.name
+        if not isinstance(linter_name,str): # bytes in Python3 -- not sure where it gets set
+            linter_name = linter_name.decode()
+        print("linter_name",repr(linter_name))
+        App.logger.debug('Sending Payload to linter {0}:'.format(linter_name))
         App.logger.debug(payload)
-        linter_function = '{0}tx_lint_{1}'.format(App.prefix, linter.name)
+        linter_function = '{0}tx_lint_{1}'.format(App.prefix, linter_name)
         print("send_payload_to_linter: linter_function is {!r}, payload={}".format(linter_function,payload))
         # TODO: Put an alternative function call in here RJH
         #response = App.lambda_handler().invoke(function_name=linter_function, payload=payload, async=True)
@@ -503,9 +511,13 @@ class ClientWebhook(object):
         """
         :return string:
         """
-        job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")).hexdigest()
+        try: job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")).hexdigest()
+        except TypeError: # in Python3
+            job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f").encode('utf-8')).hexdigest()
         while TxJob.get(job_id):
-            job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")).hexdigest()
+            try: job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")).hexdigest()
+            except TypeError: # in Python3
+                job_id = hashlib.sha256(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f").encode('utf-8')).hexdigest()
         return job_id
 
     def get_converter_module(self, job):

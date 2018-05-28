@@ -4,16 +4,16 @@ import os
 import tempfile
 import traceback
 try:
-    import urlparse
+    from urlparse import urlparse, urlunparse, parse_qsl
 except ModuleNotFoundError:
-    from urllib.parse import urlparse
+    from urllib.parse import urlparse, urlunparse, parse_qsl
 import requests
 from shutil import copy
 from abc import ABCMeta, abstractmethod
 
-from src.general_tools.url_utils import download_file
-from src.general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
-from src.app.app import App
+from general_tools.url_utils import download_file
+from general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
+from app.app import App
 from .convert_logger import ConvertLogger
 
 
@@ -100,7 +100,7 @@ class Converter(object):
             else:
                 self.log.error('Resource {0} currently not supported.'.format(self.resource))
         except Exception as e:
-            self.log.error('Conversion process ended abnormally: {0}'.format(e.message))
+            self.log.error('Conversion process ended abnormally: {0}'.format(e))
             App.logger.error('{0}: {1}'.format(str(e), traceback.format_exc()))
 
         results = {
@@ -152,14 +152,14 @@ class Converter(object):
     def check_for_exclusive_convert(self):
         convert_only = []
         if self.source and len(self.source) > 0:
-            parsed = urlparse.urlparse(self.source)
-            params = urlparse.parse_qsl(parsed.query)
+            parsed = urlparse(self.source)
+            params = parse_qsl(parsed.query)
             if params and len(params) > 0:
                 for i in range(0, len(params)):
                     item = params[i]
                     if item[0] == 'convert_only':
                         convert_only = item[1].split(',')
                         App.logger.debug('Converting only: {0}'.format(convert_only))
-                        self.source = urlparse.urlunparse((parsed.scheme, parsed.netloc, parsed.path, '', '', ''))
+                        self.source = urlunparse((parsed.scheme, parsed.netloc, parsed.path, '', '', ''))
                         break
         return convert_only

@@ -2,9 +2,9 @@ from __future__ import print_function, unicode_literals
 import json
 import datetime
 
-from src.door43_tools.page_metrics import PageMetrics
-from src.models.manifest import TxManifest
-from src.app.app import App
+from door43_tools.page_metrics import PageMetrics
+from models.manifest import TxManifest
+from app.app import App
 
 
 class ProjectSearch(object):

@@ -1,6 +1,6 @@
 from __future__ import print_function, unicode_literals
 
-from src.app.app import App
+from app.app import App
 
 
 class DownloadMetrics(object):

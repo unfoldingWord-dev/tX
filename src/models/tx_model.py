@@ -3,7 +3,7 @@ from datetime import datetime, date
 
 from sqlalchemy import inspect
 
-from src.app.app import App
+from app.app import App
 
 
 class TxModel(object):

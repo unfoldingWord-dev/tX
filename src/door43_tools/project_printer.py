@@ -5,9 +5,9 @@ import codecs
 from bs4 import BeautifulSoup
 from glob import glob
 
-from src.general_tools.file_utils import read_file
-from src.resource_container.ResourceContainer import RC
-from src.app.app import App
+from general_tools.file_utils import read_file
+from resource_container.ResourceContainer import RC
+from app.app import App
 
 
 class ProjectPrinter(object):
@@ -64,7 +64,8 @@ class ProjectPrinter(object):
                     if not content:
                         content = BeautifulSoup('<div>No content</div>', 'html.parser').find('div').extract()
                     content['id'] = os.path.basename(fname)
-                    print_all.write(unicode(content))
+                    try: print_all.write(unicode(content))
+                    except NameError: print_all.write(str(content))
             print_all.write("""
 </body>
 </html>

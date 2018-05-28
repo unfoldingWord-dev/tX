@@ -1,12 +1,13 @@
 from __future__ import unicode_literals, print_function
-from sqlalchemy import Column, String, DateTime, Boolean, Integer
-from sqlalchemy.orm.attributes import flag_modified
 from datetime import datetime
 
-from src.models.tx_model import TxModel
-from src.models.text_pickle_type import TextPickleType
-from src.app.app import App
-from src.general_tools.data_utils import convert_string_to_date
+from sqlalchemy import Column, String, DateTime, Boolean, Integer
+from sqlalchemy.orm.attributes import flag_modified
+
+from models.tx_model import TxModel
+from models.text_pickle_type import TextPickleType
+from app.app import App
+from general_tools.data_utils import convert_string_to_date
 
 
 class TxJob(App.Base, TxModel):

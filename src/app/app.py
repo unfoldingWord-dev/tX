@@ -3,15 +3,16 @@ import sys
 import os
 import logging
 import re
+
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 
-from src.aws_tools.s3_handler import S3Handler
-from src.aws_tools.dynamodb_handler import DynamoDBHandler
-#from src.aws_tools.lambda_handler import LambdaHandler
-from src.gogs_tools.gogs_handler import GogsHandler
+from aws_tools.s3_handler import S3Handler
+from aws_tools.dynamodb_handler import DynamoDBHandler
+#from aws_tools.lambda_handler import LambdaHandler
+from gogs_tools.gogs_handler import GogsHandler
 
 
 def resetable(cls):
@@ -164,7 +165,7 @@ class App(object):
     def set_vars(cls, **kwargs):
         print("App.set_vars()...")
         # Sets all the given variables for the class, and then marks it as dirty
-        for var, value in kwargs.iteritems():
+        for var, value in kwargs.items():
             if hasattr(App, var):
                 setattr(App, var, value)
                 cls.dirty = True

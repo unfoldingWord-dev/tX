@@ -7,7 +7,7 @@ import codecs
 from shutil import copyfile
 from bs4 import BeautifulSoup
 
-from src.general_tools.file_utils import write_file, get_files
+from general_tools.file_utils import write_file, get_files
 from .converter import Converter
 
 
@@ -102,7 +102,8 @@ class Md2HtmlConverter(Converter):
                         tag.parent['id'] = tag['id']
                         tag.parent['class'] = tag.parent.get('class', []) + ['section-header']
                         tag.extract()
-                html = unicode(soup)
+                try: html = unicode(soup)
+                except NameError: html = str(soup)
 
                 base_name = os.path.splitext(os.path.basename(filename))[0]
                 found_chapters[base_name] = True

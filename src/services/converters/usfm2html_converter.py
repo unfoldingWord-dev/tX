@@ -1,8 +1,4 @@
 from __future__ import print_function, unicode_literals
-try:
-    import urlparse
-except ModuleNotFoundError:
-    from urllib.parse import urlparse
 import os
 import tempfile
 import codecs
@@ -12,8 +8,8 @@ from shutil import copyfile
 from usfm_tools.transform import UsfmTransform
 
 from .converter import Converter
-from src.general_tools.file_utils import write_file, remove_tree, get_files
-from src.app.app import App
+from general_tools.file_utils import write_file, remove_tree, get_files
+from app.app import App
 
 
 class Usfm2HtmlConverter(Converter):
@@ -58,7 +54,8 @@ class Usfm2HtmlConverter(Converter):
                 else:
                     content_div.append('<div class="error">ERROR! NOT CONVERTED!</div>')
                 output_file = os.path.join(self.output_dir, html_filename)
-                write_file(output_file, unicode(template_soup))
+                try: write_file(output_file, unicode(template_soup))
+                except NameError: write_file(output_file, str(template_soup))
                 self.log.info('Converted {0} to {1}.'.format(os.path.basename(filename),
                                                              os.path.basename(html_filename)))
                 remove_tree(scratch_dir)

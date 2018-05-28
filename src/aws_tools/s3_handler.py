@@ -5,7 +5,7 @@ import boto3
 import botocore
 from boto3.session import Session
 
-from src.general_tools.file_utils import get_mime_type
+from general_tools.file_utils import get_mime_type
 
 
 class S3Handler(object):

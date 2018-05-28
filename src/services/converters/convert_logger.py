@@ -1,6 +1,6 @@
 from __future__ import unicode_literals, print_function
 
-from src.app.app import App
+from app.app import App
 
 
 class ConvertLogger(object):

@@ -9,7 +9,7 @@ clean_doc:
 	cd docs && rm -f source/src.*.rst
 
 dependencies:
-	pip2 install -r requirements.txt
+	pip install -r requirements.txt
 
 # NOTE: The following environment variables are expected to be set:
 #	TX_PREFIX (optional)
@@ -18,8 +18,9 @@ dependencies:
 #	AWS_SECRET_ACCESS_KEY
 
 test:
-	python2 -m unittest discover -s tests/
+	PYTHONPATH="src/" python2 -m unittest discover -s tests/
+	PYTHONPATH="src/" python3 -m unittest discover -s tests/
 
 run:
-	python2 src/main.py
+	python src/main.py
 #           and then browse to 127.0.0.1:5000

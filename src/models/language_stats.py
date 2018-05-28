@@ -1,4 +1,5 @@
 from __future__ import unicode_literals, print_function
+
 from models.model import Model
 from app.app import App
 

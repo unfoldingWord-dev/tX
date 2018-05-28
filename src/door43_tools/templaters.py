@@ -4,11 +4,11 @@ import codecs
 from glob import glob
 from bs4 import BeautifulSoup
 
-from src.general_tools import file_utils
-from src.general_tools.file_utils import write_file
-from src.resource_container.ResourceContainer import RC
-from src.general_tools.file_utils import load_yaml_object
-from src.app.app import App
+from general_tools import file_utils
+from general_tools.file_utils import write_file
+from resource_container.ResourceContainer import RC
+from general_tools.file_utils import load_yaml_object
+from app.app import App
 
 
 def do_template(resource_type, source_dir, output_dir, template_file):
@@ -60,7 +60,8 @@ class Templater(object):
             soup.body['class'] = soup.body.get('class', []) + [self.resource_type]
             if self.classes:
                 soup.body['class'] = soup.body.get('class', []) + self.classes
-            self.template_html = unicode(soup)
+            try: self.template_html = unicode(soup)
+            except NameError: self.template_html = str(soup)
         self.apply_template()
         return True
 
@@ -204,7 +205,8 @@ class Templater(object):
                             right_sidebar_div.append(right_sidebar_nav)
 
                 # render the html as an unicode string
-                html = unicode(soup)
+                try: html = unicode(soup)
+                except NameError: html = str(soup)
 
                 # fix the footer message, removing the title of this page in parentheses as it doesn't get filled
                 html = html.replace(
@@ -234,7 +236,8 @@ class Templater(object):
                     right_sidebar_div.append(right_sidebar)
 
                     # render the html as an unicode string
-                    html = unicode(soup)
+                    try: html = unicode(soup)
+                    except NameError: html = str(soup)
 
                     # write to output directory
                     out_file = os.path.join(self.output_dir, os.path.basename(filename))

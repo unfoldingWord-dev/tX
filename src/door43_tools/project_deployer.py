@@ -8,10 +8,10 @@ from glob import glob
 from shutil import copyfile
 from datetime import datetime, timedelta
 
-from src.general_tools import file_utils
-from src.general_tools.file_utils import write_file, remove_tree
-from src.door43_tools.templaters import init_template
-from src.app.app import App
+from general_tools import file_utils
+from general_tools.file_utils import write_file, remove_tree
+from door43_tools.templaters import init_template
+from app.app import App
 
 
 class ProjectDeployer(object):
@@ -264,7 +264,7 @@ class ProjectDeployer(object):
             success = True
         except Exception as e:
             App.logger.error("Error applying template {0} to resource type {1}:".format(template_file, resource_type))
-            App.logger.error(e.message)
+            App.logger.error(e)
             App.logger.error('{0}: {1}'.format(str(e), traceback.format_exc()))
             self.close()
             success = False

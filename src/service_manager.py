@@ -80,7 +80,7 @@ class ServiceManager():
             >>> }
         """
         routes = {}
-        for key, value in self.__routes.iteritems():
+        for key, value in self.__routes.items():
             url = host_url.rstrip('/') +  value['rule']
             routes[key] = {
                 'route': url,
