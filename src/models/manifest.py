@@ -3,7 +3,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, String, Integer, UniqueConstraint, DateTime, UnicodeText
 
-from general_tools.data_utils import convert_string_to_date
+from tools.general_tools.data_utils import convert_string_to_date
 from models.tx_model import TxModel
 from app.app import App
 from models.text_pickle_type import TextPickleType

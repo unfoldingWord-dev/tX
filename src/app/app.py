@@ -9,10 +9,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 
-from aws_tools.s3_handler import S3Handler
-from aws_tools.dynamodb_handler import DynamoDBHandler
-#from aws_tools.lambda_handler import LambdaHandler
-from gogs_tools.gogs_handler import GogsHandler
+from tools.aws_tools.s3_handler import S3Handler
+from tools.aws_tools.dynamodb_handler import DynamoDBHandler
+from tools.aws_tools.lambda_handler import LambdaHandler
+from tools.gogs_tools.gogs_handler import GogsHandler
 
 
 def resetable(cls):

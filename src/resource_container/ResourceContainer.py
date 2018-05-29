@@ -4,9 +4,9 @@ import re
 from datetime import datetime
 from glob import glob
 
-from door43_tools.td_language import TdLanguage
-from door43_tools.bible_books import BOOK_NAMES
-from general_tools.file_utils import load_json_object, load_yaml_object, read_file
+from tools.door43_tools.td_language import TdLanguage
+from tools.door43_tools.bible_books import BOOK_NAMES
+from tools.general_tools.file_utils import load_json_object, load_yaml_object, read_file
 
 try:
     basestring = basestring

@@ -2,13 +2,13 @@ from __future__ import print_function, unicode_literals
 import os
 import tempfile
 import codecs
-from bs4 import BeautifulSoup
 from shutil import copyfile
 
+from bs4 import BeautifulSoup
 from usfm_tools.transform import UsfmTransform
 
 from .converter import Converter
-from general_tools.file_utils import write_file, remove_tree, get_files
+from tools.general_tools.file_utils import write_file, remove_tree, get_files
 from app.app import App
 
 

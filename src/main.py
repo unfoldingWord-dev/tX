@@ -8,8 +8,8 @@ from service_manager import ServiceManager
 
 from services.sample import sample_service
 from services.client.client_webhook import ClientWebhookHandler
-#from services.client.client_converter_callback import ClientConverterCallback
-#from services.client.client_linter_callback import ClientLinterCallback
+from services.client.client_converter_callback import ClientConverterCallback
+from services.client.client_linter_callback import ClientLinterCallback
 from services.converters.md2html_converter import Md2HtmlConverter
 from services.converters.usfm2html_converter import Usfm2HtmlConverter
 
@@ -48,10 +48,10 @@ def register_services(api):
     api.register_route(sample_service, '/sample/<string:name>')
     # Client routes
     #api.register_route(, '/client/callback') # appears deprecated
-    #api.register_route(ClientConverterCallback, '/client/callback/converter')
-    #api.register_route(ClientConverterCallback, '/client/callback/converter', methods=['POST'])
-    #api.register_route(ClientLinterCallback, '/client/callback/linter')
-    #api.register_route(ClientLinterCallback, '/client/callback/linter', methods=['POST'])
+    api.register_route(ClientConverterCallback, '/client/callback/converter')
+    api.register_route(ClientConverterCallback, '/client/callback/converter', methods=['POST'])
+    api.register_route(ClientLinterCallback, '/client/callback/linter')
+    api.register_route(ClientLinterCallback, '/client/callback/linter', methods=['POST'])
     api.register_route(ClientWebhookHandler, '/client/webhook')
     api.register_route(ClientWebhookHandler, '/client/webhook', methods=['POST'])
     # tX routes

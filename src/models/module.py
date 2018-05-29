@@ -1,7 +1,9 @@
 from __future__ import unicode_literals, print_function
 from datetime import datetime
+
 from sqlalchemy import Column, String, Integer, DateTime, func
-from general_tools.data_utils import convert_string_to_date
+
+from tools.general_tools.data_utils import convert_string_to_date
 from models.tx_model import TxModel
 from models.text_pickle_type import TextPickleType
 from app.app import App

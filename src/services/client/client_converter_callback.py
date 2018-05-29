@@ -5,9 +5,9 @@ import tempfile
 from datetime import datetime
 
 from app.app import App
-from client.client_linter_callback import ClientLinterCallback
-from general_tools.file_utils import unzip, write_file, remove_tree, remove
-from general_tools.url_utils import download_file
+from .client_linter_callback import ClientLinterCallback
+from tools.general_tools.file_utils import unzip, write_file, remove_tree, remove
+from tools.general_tools.url_utils import download_file
 from models.job import TxJob
 
 

@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from flask import request, url_for
 from flask_api import status
 
-from general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
-from general_tools.url_utils import download_file
+from tools.general_tools.file_utils import unzip, write_file, add_contents_to_zip, remove_tree
+from tools.general_tools.url_utils import download_file
 from resource_container.ResourceContainer import RC
 from services.client.preprocessors import do_preprocess
 from models.manifest import TxManifest

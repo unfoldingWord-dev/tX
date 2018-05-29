@@ -5,8 +5,8 @@ from glob import glob
 from shutil import copy
 
 from app.app import App
-from door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
-from general_tools.file_utils import write_file, read_file
+from tools.door43_tools.bible_books import BOOK_NUMBERS, BOOK_NAMES, BOOK_CHAPTER_VERSES
+from tools.general_tools.file_utils import write_file, read_file
 from resource_container.ResourceContainer import RC
 
 

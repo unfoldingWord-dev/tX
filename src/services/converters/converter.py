@@ -11,8 +11,8 @@ import requests
 from shutil import copy
 from abc import ABCMeta, abstractmethod
 
-from general_tools.url_utils import download_file
-from general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
+from tools.general_tools.url_utils import download_file
+from tools.general_tools.file_utils import unzip, add_contents_to_zip, remove_tree, remove
 from app.app import App
 from .convert_logger import ConvertLogger
 

@@ -7,7 +7,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from models.tx_model import TxModel
 from models.text_pickle_type import TextPickleType
 from app.app import App
-from general_tools.data_utils import convert_string_to_date
+from tools.general_tools.data_utils import convert_string_to_date
 
 
 class TxJob(App.Base, TxModel):

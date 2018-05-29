@@ -3,9 +3,10 @@ import os
 import tempfile
 import time
 from datetime import datetime
+
 from app.app import App
-from general_tools import file_utils
-from general_tools.file_utils import unzip, write_file, remove_tree, remove
+from tools.general_tools import file_utils
+from tools.general_tools.file_utils import unzip, write_file, remove_tree, remove
 from models.job import TxJob
 
 

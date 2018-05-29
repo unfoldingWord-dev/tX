@@ -18,8 +18,9 @@ dependencies:
 #	AWS_SECRET_ACCESS_KEY
 
 test:
-	PYTHONPATH="src/" python2 -m unittest discover -s tests/
-	PYTHONPATH="src/" python3 -m unittest discover -s tests/
+	PYTHONPATH="src/" python -m unittest discover -s tests/
+	#PYTHONPATH="src/" python2 -m unittest discover -s tests/
+	#PYTHONPATH="src/" python3 -m unittest discover -s tests/
 
 run:
 	python src/main.py

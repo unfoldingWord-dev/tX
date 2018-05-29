@@ -7,7 +7,7 @@ import shutil
 from contextlib import closing
 
 from src.services.converters.usfm2html_converter import Usfm2HtmlConverter
-from src.general_tools.file_utils import remove_tree, unzip, remove
+from src.tools.general_tools.file_utils import remove_tree, unzip, remove
 from src.app.app import App
 
 

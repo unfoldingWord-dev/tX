@@ -7,7 +7,7 @@ import codecs
 from shutil import copyfile
 from bs4 import BeautifulSoup
 
-from general_tools.file_utils import write_file, get_files
+from tools.general_tools.file_utils import write_file, get_files
 from .converter import Converter
 
 
