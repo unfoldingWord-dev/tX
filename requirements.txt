@@ -14,7 +14,7 @@ python-json-logger==0.1.8
 #future==0.16.0
 #pyparsing==2.2.0
 #usfm-tools==0.0.22
--e file:../USFM-Tools#egg=usfm-tools
+-e git+https://github.com/unfoldingWord-dev/USFM-Tools.git@python2plus3#egg=usfm-tools
 mock==2.0.0
 #moto==1.3.3
 pyyaml==3.12

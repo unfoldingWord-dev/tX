@@ -1,11 +1,11 @@
-FROM python:2
+FROM python:alpine
 
 WORKDIR /tx
 
 ADD . /tx
 
 # NOTE: Check why --no-cache-dir is specified in the next line (what advantage?)
-RUN pip2 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
@@ -19,7 +19,7 @@ ENV PYTHONPATH .
 #	AWS_ACCESS_KEY_ID
 #	AWS_SECRET_ACCESS_KEY
 
-CMD [ "python2", "src/main.py" ]
+CMD [ "python", "src/main.py" ]
 
 # NOTE: To build use: docker build -t txcontainer .
 #       To test use: docker run --net="host" -p 5000:5000 --rm txcontainer

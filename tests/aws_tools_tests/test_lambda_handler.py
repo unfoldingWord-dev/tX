@@ -26,6 +26,7 @@ def lambda_handler(event, context):
         zip_file.close()
         zip_output.seek(0)
 
+        print('LambdaHandler is still being tested here with Python 2.7 -- may need updating')
         self.handler.client.create_function(
             FunctionName='testFunction',
             Runtime='python2.7',
